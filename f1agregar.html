@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<title>Agregar Conductor</title>
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<!--<script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-app.js"></script> -->
+</head>
+<body>
+	<CENTER>
+	<h1 id="holaMundo"></h1>
+	<script src="https://www.gstatic.com/firebasejs/3.6.1/firebase.js"></script>
+   <script>
+  // Your web app's Firebase configuration
+	var firebaseConfig = {
+    apiKey: "AIzaSyD3Khb4muOpFDCMtUTEczMUTpDDz-c-Al8",
+    authDomain: "testchristianc.firebaseapp.com",
+    databaseURL: "https://testchristianc.firebaseio.com",
+    projectId: "testchristianc",
+    storageBucket: "testchristianc.appspot.com",
+    messagingSenderId: "348412687094",
+    appId: "1:348412687094:web:93d7149a7e3f6ad02db2d7"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+
+// Se conecta con la base de datos de Firebase
+var dataDB= firebase.database().ref('drivers').push();
+
+function enviar()
+{
+	var nombre= document.getElementById('name');
+	var equipo= document.getElementById('team');
+	var pais= document.getElementById('country');
+	dataDB.set({
+			nombre: nombre.value,
+			equipo: equipo.value,
+			pais: pais.value
+		});
+	alert('Conductor registrado correctamente');
+}
+
+</script>
+	<style>
+	.add{
+		font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+		color:#09078d;
+	}
+	body{
+		background-image: url(https://i.pinimg.com/originals/57/a8/58/57a85878c354cc61e8c64a2b7c536785.jpg);
+	}
+	</style>
+  <form action="" method="post" class ="add">
+		<h1>Agregar Conductor</h1>
+		<img src="https://www.fia.com/sites/all/themes/penceo_theme/images/fia_logo.png" width="400px"  /><br />
+    <label> Nombre: </label><input id="name" class="input" type="text" value="" placeholder="Escribe el Nombre" required /><br />
+    <label> Equipo: </label><input id="team" class="input" type="text" value="" placeholder="Escribe el Equipo" required /><br />
+		<label> Pais: </label><input id="country" class="input" type="text" value="" placeholder="Introduce el Pais" required /><br />
+  <button id="submit_button" type="submit" onclick="enviar()">Guardar</button>
+	<input type="button" onclick="location.href='formula1.html';" value="Regresar"/>
+  </form>
+</CENTER>
+</body>
+</html>

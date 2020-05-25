@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Formula 1</title>
+
+  </head>
+  <body bgcolor="#f9f9f9">
+    <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase.js"></script>
+     <script src="https://www.gstatic.com/firebasejs/3.8.0/firebase-app.js"></script>
+     <script src="https://www.gstatic.com/firebasejs/3.8.0/firebase-database.js"></script>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  	<script>
+  	var firebaseConfig = {
+      apiKey: "AIzaSyD3Khb4muOpFDCMtUTEczMUTpDDz-c-Al8",
+      authDomain: "testchristianc.firebaseapp.com",
+      databaseURL: "https://testchristianc.firebaseio.com",
+      projectId: "testchristianc",
+      storageBucket: "testchristianc.appspot.com",
+      messagingSenderId: "348412687094",
+      appId: "1:348412687094:web:93d7149a7e3f6ad02db2d7"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+  var refDB = firebase.database().ref().child('drivers');
+  var usuarios={};
+  refDB.on('value',function(datos)
+  {
+  		$("tbody").children().remove()
+      usuarios=datos.val();
+      // Recorremos los productos y los mostramos
+      $.each(usuarios, function(indice,valor)
+      {
+          var tBody = document.getElementById('dataTable').lastElementChild;
+          var tr1 = document.createElement('tr');
+          tBody.appendChild(tr1);
+          var prevProducto='<td>'+valor.nombre+'</td>';
+          prevProducto+='<td>'+valor.equipo+'</td>';
+          prevProducto+='<td>'+valor.pais+'</td>';
+          prevProducto+='<td><button type="button" class="btn btn-warning" onclick="editar(\''+indice+'\')">Editar</button></td>';
+          prevProducto+='<td><button type="button" class="btn btn-danger" onclick="borrar(\''+indice+'\')">Borrar</button></td>';
+          $(prevProducto).appendTo(tr1);
+
+      });
+
+  },function(objetoError){
+      console.log('Error de lectura:'+objetoError.code);
+  });
+
+  function editar(id)
+  {
+      // Para pasar el ID a otro proceso lo hacemos a través de window.name
+      window.name= id;
+
+      // Cargamos la página editarproducto.html
+      location.assign('f1editar.html');
+  }
+
+  function borrar(id)
+  {
+  	if(confirm("¿Está seguro de que desea borrar al conductor?")==true)
+  	{
+  		refDB.child(id).remove();
+  	}
+  }
+
+  function buscar(usuario){
+  		if (usuario != "") {
+  			refDB.orderByChild('nombre').equalTo(usuario).limitToFirst(1).on('value',function(datos)
+  			{
+  					$("tbody").children().remove()
+  					usuarios=datos.val();
+  					// Recorremos los productos y los mostramos
+  					$.each(usuarios, function(indice,valor)
+  					{
+  							var tBody = document.getElementById('dataTable').lastElementChild;
+  							var tr1 = document.createElement('tr');
+  							tBody.appendChild(tr1);
+  							var prevProducto='<td>'+valor.nombre+'</td>';
+  							prevProducto+='<td>'+valor.equipo+'</td>';
+  							prevProducto+='<td>'+valor.pais+'</td>';
+  							prevProducto+='<td><button type="button" class="btn btn-warning" onclick="editar(\''+indice+'\')">Editar</button></td>';
+  							prevProducto+='<td><button type="button" class="btn btn-danger" onclick="borrar(\''+indice+'\')">Borrar</button></td>';
+  							$(prevProducto).appendTo(tr1);
+
+  					});
+
+  			},function(objetoError){
+  					console.log('Error de lectura:'+objetoError.code);
+  			});
+  		} else {
+  			refDB.on('value',function(datos)
+  			{
+  					$("tbody").children().remove()
+  			    usuarios=datos.val();
+  			    // Recorremos los productos y los mostramos
+  			    $.each(usuarios, function(indice,valor)
+  			    {
+  			        var tBody = document.getElementById('dataTable').lastElementChild;
+  			        var tr1 = document.createElement('tr');
+  			        tBody.appendChild(tr1);
+  			        var prevProducto='<td>'+valor.nombre+'</td>';
+  			        prevProducto+='<td>'+valor.equipo+'</td>';
+  			        prevProducto+='<td>'+valor.pais+'</td>';
+  			        prevProducto+='<td><button type="button" class="btn btn-warning" onclick="editar(\''+indice+'\')">Editar</button></td>';
+  			        prevProducto+='<td><button type="button" class="btn btn-danger" onclick="borrar(\''+indice+'\')">Borrar</button></td>';
+  			        $(prevProducto).appendTo(tr1);
+
+  			    });
+
+  			},function(objetoError){
+  			    console.log('Error de lectura:'+objetoError.code);
+  			});
+  		}
+
+  }
+
+  	</script>
+  <font face="Helvetica">
+  <div class="titulo" bgcolor="#000000">
+
+      <img src="https://www.formula1.com/etc/designs/fom-website/images/f1_logo.svg" height="75px" />
+
+  </div>
+  <div class="contenedor">
+			<img src="https://simracingsetup.com/wp-content/uploads/2020/02/F1-2020-All-Team-Desktop-Wallpaper.jpg" width="1333px"  />
+
+
+     <div class="centrado">F1 Drivers 2020</div>
+     <div class="texto-encima"></div>
+
+
+    </div>
+
+
+  <lu>
+  <CENTER>
+
+  <style>
+
+ .contenedor{
+
+    text-align: center;
+
+}
+.titulo{
+    text-align: center;
+    background-color:#F70909;
+}
+
+.centrado{
+    position: absolute;
+    top: 49.5%;
+    left: 50%;
+    font-size: 6em;
+    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    color:white;
+
+
+    transform: translate(-50%, -50%);
+}
+.texto-encima{
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+
+}
+.search{
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  background-color:#F70909;
+  color:white;
+}
+.add{
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  color:red;
+}
+body{
+  background-image: url(https://www.hdcarwallpapers.com/walls/2016_mclaren_p1_gtr_f1-wide.jpg);
+}
+    tr:nth-child(odd) {
+     background-color:black;
+     color:white;
+     text-align:center;
+     font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    }
+    tr:nth-child(even) {
+     background-color:#F70909;
+     color:white;
+     text-align:center;
+     font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    }
+
+
+ </style>
+
+  <form action="" method="post" class="search">
+    <label for="">Filtrar por nombre:</label>
+    <input type="text" name="usuario" id="usuario">
+    <button id="submit_button" type="button" onclick="buscar(usuario.value)">Buscar</button>
+  </form>
+  <table id="dataTable" border-color="#000" cellspacing="7" cellpadding="10" width="1333">
+    <thead>
+  <th>Nombre</th><th>Equipo</th><th>Pais</th><th colspan="2">Acciones</th>
+  </thead>
+  <tbody></tbody>
+  </table>
+
+  <a href="f1agregar.html" class="add">Agregar Conductor</a>
+   </CENTER>
+</lu>
+
+  </body>
+
+</html>
